@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESPN Survey Tool — Client Engagement Plan | The Known Collective</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Frank+Ruhl+Libre:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #26434D;
+    --teal-90: rgba(38, 67, 77, 0.9);
+    --teal-70: rgba(38, 67, 77, 0.7);
+    --teal-50: rgba(38, 67, 77, 0.5);
+    --teal-20: rgba(38, 67, 77, 0.2);
+    --teal-10: rgba(38, 67, 77, 0.1);
+    --teal-05: rgba(38, 67, 77, 0.05);
+    --white: #FFFFFF;
+    --off-white: #FAFAF8;
+    --warm-white: #F7F5F2;
+    --lilac: #DDD3F8;
+    --lilac-soft: rgba(221, 211, 248, 0.3);
+    --lilac-wash: rgba(221, 211, 248, 0.12);
+    --vermillion: #E03522;
+    --vermillion-soft: rgba(224, 53, 34, 0.08);
+    --dijon: #AA8A3B;
+    --green: #4A9B6E;
+    --green-soft: rgba(74, 155, 110, 0.12);
+    --amber: #D49A3A;
+    --amber-soft: rgba(212, 154, 58, 0.12);
+    --text-primary: #26434D;
+    --text-secondary: #4A6670;
+    --text-muted: #7A9199;
+    --border-light: rgba(38, 67, 77, 0.1);
+    --border-medium: rgba(38, 67, 77, 0.18);
+    --shadow-sm: 0 1px 4px rgba(38, 67, 77, 0.06);
+    --shadow-md: 0 2px 12px rgba(38, 67, 77, 0.08);
+    --shadow-lg: 0 8px 32px rgba(38, 67, 77, 0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--teal-20) var(--off-white);
+  }
+
+  body {
+    background: var(--off-white);
+    color: var(--text-primary);
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--teal);
+    padding: 0 48px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: box-shadow 0.3s ease;
+  }
+
+  nav.scrolled {
+    box-shadow: 0 4px 24px rgba(38, 67, 77, 0.25);
+  }
+
+  .nav-brand {
+    font-family: 'Frank Ruhl Libre', Georgia, serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--white);
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 4px;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--white);
+    background: rgba(255,255,255,0.12);
+  }
+
+  /* ---- CONTAINER ---- */
+  .container {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  /* ---- SECTIONS ---- */
+  section {
+    padding: 96px 0 64px;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--vermillion);
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-family: 'Frank Ruhl Libre', Georgia, serif;
+    font-size: clamp(32px, 4.5vw, 48px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--teal);
+    margin-bottom: 16px;
+  }
+
+  .section-lead {
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin-bottom: 48px;
+    line-height: 1.65;
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    padding-top: 56px;
+    opacity: 1 !important;
+    transform: none !important;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 80% 20%, var(--lilac-soft) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 80%, var(--lilac-wash) 0%, transparent 40%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 56px; right: -120px;
+    width: 500px; height: 500px;
+    border: 1px solid var(--lilac-soft);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    animation: heroCircle 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.6s forwards;
+  }
+
+  @keyframes heroCircle {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .hero-overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--vermillion);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.2s forwards;
+    position: relative;
+  }
+
+  .hero h1 {
+    font-family: 'Frank Ruhl Libre', Georgia, serif;
+    font-size: clamp(44px, 7vw, 80px);
+    font-weight: 700;
+    line-height: 1.02;
+    color: var(--teal);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.4s forwards;
+    position: relative;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .hero-subtitle {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    max-width: 520px;
+    line-height: 1.65;
+    margin-bottom: 56px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.6s forwards;
+    position: relative;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 48px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.8s forwards;
+    position: relative;
+  }
+
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .hero-meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .hero-meta-value {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--teal);
+  }
+
+  /* ---- DECORATIVE DIVIDER ---- */
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border-light), var(--lilac-soft), var(--border-light), transparent);
+    margin: 0;
+  }
+
+  /* ---- SCOPE TABLE ---- */
+  .scope-table-wrap {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+  }
+
+  .scope-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .scope-table thead {
+    background: var(--teal-05);
+  }
+
+  .scope-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border-medium);
+    font-weight: 500;
+  }
+
+  .scope-table td {
+    padding: 14px 20px;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .scope-table tbody tr {
+    transition: background 0.15s ease;
+  }
+
+  .scope-table tbody tr:hover {
+    background: var(--teal-05);
+  }
+
+  .scope-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .scope-table td:first-child {
+    color: var(--teal);
+    font-weight: 500;
+  }
+
+  .scope-status {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  .scope-status.done {
+    background: var(--green-soft);
+    color: var(--green);
+  }
+
+  .scope-status.pending {
+    background: var(--amber-soft);
+    color: var(--amber);
+  }
+
+  /* ---- CALLOUT ---- */
+  .callout {
+    background: var(--white);
+    border-left: 3px solid var(--lilac);
+    padding: 24px 28px;
+    margin: 32px 0;
+    border-radius: 0 12px 12px 0;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .callout p {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .callout strong {
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  /* ---- PROGRESS BAR ---- */
+  .progress-bar-wrap {
+    margin-bottom: 40px;
+  }
+
+  .progress-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .progress-labels span {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+
+  .progress-labels strong {
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  .progress-track {
+    width: 100%;
+    height: 8px;
+    background: var(--teal-10);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--teal), var(--teal-70));
+    border-radius: 4px;
+    transition: width 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .progress-fill.animate {
+    width: 72%;
+  }
+
+  /* ---- WEEK ACCORDION ---- */
+  .week-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .week-block {
+    background: var(--white);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.25s ease;
+    box-shadow: var(--shadow-sm);
+    border-left: 3px solid transparent;
+  }
+
+  .week-block:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .week-block.open {
+    border-left-color: var(--lilac);
+    box-shadow: var(--shadow-md);
+  }
+
+  .week-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s ease;
+  }
+
+  .week-header:hover {
+    background: var(--teal-05);
+  }
+
+  .week-num {
+    font-family: 'Frank Ruhl Libre', Georgia, serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--teal);
+    min-width: 36px;
+  }
+
+  .week-dates {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    min-width: 115px;
+    letter-spacing: 0.02em;
+  }
+
+  .week-title {
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--teal);
+    flex: 1;
+  }
+
+  .week-chevron {
+    color: var(--text-muted);
+    font-size: 12px;
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    flex-shrink: 0;
+  }
+
+  .week-block.open .week-chevron {
+    transform: rotate(180deg);
+  }
+
+  .week-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .week-block.open .week-body {
+    max-height: 2000px;
+  }
+
+  .week-content {
+    padding: 0 24px 28px;
+    border-top: 1px solid var(--border-light);
+    padding-top: 24px;
+  }
+
+  .task-group {
+    margin-bottom: 24px;
+  }
+
+  .task-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .task-group-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    color: var(--vermillion);
+  }
+
+  .task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 7px 0;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .task-check {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--teal-20);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+  }
+
+  .task-check:hover {
+    border-color: var(--teal-50);
+    background: var(--teal-05);
+  }
+
+  .task-check.checked {
+    background: var(--teal);
+    border-color: var(--teal);
+  }
+
+  .task-check.checked::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 5px;
+    width: 4px; height: 8px;
+    border: solid var(--white);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  /* ---- DEMO FLOW ---- */
+  .demo-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 12px 0 4px;
+  }
+
+  .demo-step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 16px;
+    align-items: center;
+    padding: 10px 16px;
+    background: var(--teal-05);
+    border-radius: 6px;
+    transition: background 0.15s ease;
+  }
+
+  .demo-step:hover {
+    background: var(--teal-10);
+  }
+
+  .demo-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--teal);
+    text-align: right;
+  }
+
+  .demo-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  /* ---- SUPPORT BLOCK ---- */
+  .support-block {
+    background: var(--white);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 32px;
+    margin-top: 32px;
+    box-shadow: var(--shadow-sm);
+    border-left: 3px solid var(--dijon);
+  }
+
+  .support-block h3 {
+    font-family: 'Frank Ruhl Libre', Georgia, serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 16px;
+  }
+
+  .support-block li {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 6px;
+    padding-left: 18px;
+    position: relative;
+    list-style: none;
+  }
+
+  .support-block li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--teal-20);
+  }
+
+  .support-block li strong {
+    color: var(--teal);
+  }
+
+  /* ---- FOOTER ---- */
+  .footer {
+    text-align: center;
+    padding: 48px 0 64px;
+  }
+
+  .footer-line {
+    width: 48px;
+    height: 2px;
+    background: var(--lilac);
+    margin: 0 auto 24px;
+    border-radius: 1px;
+  }
+
+  .footer-brand {
+    font-family: 'Frank Ruhl Libre', Georgia, serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--teal-50);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---- PRINT ---- */
+  @media print {
+    body { background: white; font-size: 12px; }
+    nav { display: none; }
+    .hero { min-height: auto; padding: 40px 0; }
+    .hero::before, .hero::after { display: none; }
+    section { opacity: 1 !important; transform: none !important; padding: 24px 0; page-break-inside: avoid; }
+    .container { padding: 0 24px; max-width: 100%; }
+    .scope-table-wrap { box-shadow: none; border: 1px solid #ddd; }
+    .week-body { max-height: none !important; }
+    .week-block { box-shadow: none; border: 1px solid #ddd; border-left: 3px solid var(--lilac); }
+    .callout { box-shadow: none; }
+    .support-block { box-shadow: none; }
+    .progress-fill { width: 72% !important; }
+    .footer { page-break-before: avoid; }
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 768px) {
+    .container { padding: 0 24px; }
+    nav { padding: 0 20px; gap: 12px; }
+    .nav-links { display: none; }
+    section { padding: 64px 0 48px; }
+    .hero { min-height: auto; padding: 120px 0 80px; }
+    .hero-meta { flex-direction: column; gap: 16px; }
+    .scope-table th:nth-child(4),
+    .scope-table td:nth-child(4) { display: none; }
+    .week-header { flex-wrap: wrap; gap: 8px; }
+    .week-dates { min-width: auto; }
+    .demo-step { grid-template-columns: 48px 1fr; gap: 12px; }
+    .progress-labels { flex-direction: column; gap: 4px; }
+  }
+
+  @media (max-width: 480px) {
+    .scope-table th:nth-child(2),
+    .scope-table td:nth-child(2) { display: none; }
+    .hero h1 { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-brand">The Known Collective</div>
+  <div class="nav-links">
+    <a href="#scope">Scope</a>
+    <a href="#weeks">Week by Week</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-overline">Client Engagement Plan</div>
+    <h1>ESPN Survey Tool<br><em>The Next 6 Weeks</em></h1>
+    <p class="hero-subtitle">A roadmap for stakeholder engagement, feedback collection, and a confident production handoff to the ESPN research team.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Timeline</span>
+        <span class="hero-meta-value">March 31 &ndash; May 23, 2026</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Current Phase</span>
+        <span class="hero-meta-value">Week 9 of 20</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Client</span>
+        <span class="hero-meta-value">ESPN Research Team</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Status</span>
+        <span class="hero-meta-value">Ahead of Schedule</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- SCOPE ALIGNMENT -->
+  <section id="scope">
+    <div class="section-number">01</div>
+    <h2>Scope Alignment</h2>
+    <p class="section-lead">Every line item from the original Statement of Work mapped to current delivery status.</p>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-labels">
+        <span>SOW Completion</span>
+        <span><strong>13</strong> of <strong>18</strong> items complete</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <div class="scope-table-wrap">
+      <table class="scope-table">
+        <thead>
+          <tr>
+            <th>SOW Item</th>
+            <th>Timeline</th>
+            <th>Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Azure infrastructure setup</td>
+            <td>Weeks 1&ndash;3</td>
+            <td><span class="scope-status done">Complete</span></td>
+            <td>Azure App Service, PostgreSQL Flexible Server, AI Foundry</td>
+          </tr>
+          <tr>
+            <td>Database design and deployment</td>
+            <td>Weeks 1&ndash;3</td>
+            <td><span class="scope-status done">Complete</span></td>
+            <td>5-table schema with Drizzle ORM, migrations automated</td>
+          </tr>
+          <tr>
+            <td>Burke methodology preparation</td>
+            <td>Weeks 1&ndash;3</td>
+            <td><span class="scope-status done">Complete</span></td>
+            <td>Integrated as static reference, always injected into generation</td>
+          </tr>
+          <tr>
+            <td>ESPN survey catalog indexing</td>
+            <td>Weeks 4&ndash;7</td>
+            <td><span class="scope-status done">Complete</span></td>
+            <td>21 historical surveys indexed, 581 chunks, hybrid retrieval</td>
+          </tr>
+          <tr>
+            <td>GPT-5 deployment and RAG pipeline</td>
+            <td>Weeks 4&ndash;7</td>
+            <td><span class="scope-status done">Complete</span></td>
+            <td>Upgraded to GPT-5.4. Full RAG with vector + full-text search</td>
+          </tr>
+          <tr>
+            <td>API development (auth, survey generation)</td>
+            <td>Weeks 8&ndash;11</td>
+            <td><span class="scope-status done">Complete</span></td>
+            <td>RESTful API with SSE streaming, session-based auth</td>
+          </tr>
+          <tr>
+            <td>Survey export (Word and JSON)</td>
+            <td>Weeks 8&ndash;11</td>
+            <td><span class="scope-status done">Complete</span></td>
+            <td>ESPN-branded .docx export and structured JSON export</td>
+          </tr>
+          <tr>
+            <td>Performance optimization</td>
+            <td>Weeks 8&ndash;11</td>
+            <td><span class="scope-status done">Complete</span></td>
+            <td>System prompt caching, optimized RAG retrieval limits</td>
+          </tr>
+          <tr>
+            <td>Web application and authentication UI</td>
+            <td>Weeks 12&ndash;15</td>
+            <td><span class="scope-status done">Complete</span></td>
+            <td>Full React SPA with login, registration, session management</td>
+          </tr>
+          <tr>
+            <td>Survey generation interface (3-input form)</td>
+            <td>Weeks 12&ndash;15</td>
+            <td><span class="scope-status done">Complete</span></td>
+            <td>3-input form plus full conversational chat interface</td>
+          </tr>
+          <tr>
+            <td>UI polish and cross-browser testing</td>
+            <td>Weeks 12&ndash;15</td>
+            <td><span class="scope-status done">Complete</span></td>
+            <td>Custom ESPN &ldquo;Huddle&rdquo; dark-mode theme, mobile-responsive</td>
+          </tr>
+          <tr>
+            <td>System integration testing</td>
+            <td>Weeks 16&ndash;17</td>
+            <td><span class="scope-status done">Complete</span></td>
+            <td>Multi-scenario eval framework, ground-truth comparison testing</td>
+          </tr>
+          <tr>
+            <td>User acceptance testing (UAT)</td>
+            <td>Weeks 16&ndash;17</td>
+            <td><span class="scope-status pending">Planned</span></td>
+            <td>Scheduled for Julie stakeholder session (Week 2 of this plan)</td>
+          </tr>
+          <tr>
+            <td>Production deployment</td>
+            <td>Weeks 18&ndash;19</td>
+            <td><span class="scope-status pending">Planned</span></td>
+            <td>Dev environment live. Production launch planned for Week 5</td>
+          </tr>
+          <tr>
+            <td>User provisioning</td>
+            <td>Weeks 18&ndash;19</td>
+            <td><span class="scope-status pending">Planned</span></td>
+            <td>Accounts will be provisioned before production launch</td>
+          </tr>
+          <tr>
+            <td>User guide creation</td>
+            <td>Weeks 18&ndash;19</td>
+            <td><span class="scope-status done">Complete</span></td>
+            <td>Julie-specific usage guide already written</td>
+          </tr>
+          <tr>
+            <td>Training session (2-hour)</td>
+            <td>Weeks 18&ndash;19</td>
+            <td><span class="scope-status pending">Planned</span></td>
+            <td>Team training scheduled for production launch week</td>
+          </tr>
+          <tr>
+            <td>60-day support period</td>
+            <td>Week 20+</td>
+            <td><span class="scope-status pending">Planned</span></td>
+            <td>Begins at production launch. Email support, 24-hour response</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>Bottom line:</strong> 13 of 18 SOW line items are complete. The remaining 5 are scheduled within this engagement plan&rsquo;s timeline. Nothing is behind or at risk.</p>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- WEEK-BY-WEEK -->
+  <section id="weeks">
+    <div class="section-number">02</div>
+    <h2>Week-by-Week Plan</h2>
+    <p class="section-lead">Six weeks from outreach to production handoff and support.</p>
+
+    <div class="week-list">
+
+      <!-- W1 -->
+      <div class="week-block open">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <span class="week-num">W1</span>
+          <span class="week-dates">Mar 31 &ndash; Apr 4</span>
+          <span class="week-title">Demo Prep + Scheduling</span>
+          <span class="week-chevron">&#9662;</span>
+        </div>
+        <div class="week-body">
+          <div class="week-content">
+            <div class="task-group">
+              <div class="task-group-label">Actions</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Prepare the demo environment with clean, ESPN-relevant sample data</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Prepare demo script and talking points</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Schedule Julie session for Week 2, Jack intro for Week 2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- W2 -->
+      <div class="week-block">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <span class="week-num">W2</span>
+          <span class="week-dates">Apr 7 &ndash; 11</span>
+          <span class="week-title">First Contact &mdash; Julie, Jack + Edwin</span>
+          <span class="week-chevron">&#9662;</span>
+        </div>
+        <div class="week-body">
+          <div class="week-content">
+            <div class="task-group">
+              <div class="task-group-label">Julie &mdash; Live Demo (45&ndash;60 min)</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Conduct 45&ndash;60 min live stakeholder session with Julie and capture all feedback</div>
+            </div>
+            <div class="task-group">
+              <div class="task-group-label">Demo Script (45 minutes)</div>
+              <div class="demo-flow">
+                <div class="demo-step"><span class="demo-time">2 min</span><span class="demo-desc">Context setting &mdash; what the tool does and how it works</span></div>
+                <div class="demo-step"><span class="demo-time">5 min</span><span class="demo-desc">Guided walkthrough of the interface</span></div>
+                <div class="demo-step"><span class="demo-time">10 min</span><span class="demo-desc">Live generation &mdash; Julie provides objectives and audience</span></div>
+                <div class="demo-step"><span class="demo-time">5 min</span><span class="demo-desc">Review generated output together</span></div>
+                <div class="demo-step"><span class="demo-time">5 min</span><span class="demo-desc">Show conversational refinement &mdash; modify the survey via chat</span></div>
+                <div class="demo-step"><span class="demo-time">15 min</span><span class="demo-desc">Open feedback discussion</span></div>
+                <div class="demo-step"><span class="demo-time">2 min</span><span class="demo-desc">Next steps and timeline to production</span></div>
+              </div>
+            </div>
+            <div class="task-group">
+              <div class="task-group-label">Jack &mdash; Video Demo + Discussion (20&ndash;30 min)</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Share video demo with Jack</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Walk through what we&rsquo;re building and how it works</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Gather feedback</div>
+            </div>
+            <div class="task-group">
+              <div class="task-group-label">Edwin &mdash; Brief Intro (15&ndash;20 min)</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Share video demo with Edwin</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Walk through what we&rsquo;re building and how it works</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Gather feedback</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- W3 -->
+      <div class="week-block">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <span class="week-num">W3</span>
+          <span class="week-dates">Apr 14 &ndash; 18</span>
+          <span class="week-title">Feedback Incorporation + Link Sharing</span>
+          <span class="week-chevron">&#9662;</span>
+        </div>
+        <div class="week-body">
+          <div class="week-content">
+            <div class="task-group">
+              <div class="task-group-label">Actions</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Address priority &ldquo;before launch&rdquo; feedback items from Julie</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Share &ldquo;Feedback Incorporated&rdquo; update with the team &mdash; screenshots of changes</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Share the link with Julie, Jack, and Edwin: &ldquo;Here is the tool. Try it out.&rdquo;</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Confirm production launch date</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Begin SSO coordination with ESPN IT (if contact has been identified)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- W4 -->
+      <div class="week-block">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <span class="week-num">W4</span>
+          <span class="week-dates">Apr 21 &ndash; 25</span>
+          <span class="week-title">Independent Use + Launch Prep</span>
+          <span class="week-chevron">&#9662;</span>
+        </div>
+        <div class="week-body">
+          <div class="week-content">
+            <div class="task-group">
+              <div class="task-group-label">Team Check-In</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Check in with Julie, Jack, Edwin: &ldquo;How is it going? Any issues?&rdquo;</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Team should be generating real surveys independently by now</div>
+            </div>
+            <div class="task-group">
+              <div class="task-group-label">Launch Preparation</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Move forward with SSO coordination with ESPN IT</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Provision user accounts for the full research team</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Finalize user guide and technical documentation</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Schedule team training session for Week 5</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- W5 -->
+      <div class="week-block">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <span class="week-num">W5</span>
+          <span class="week-dates">Apr 28 &ndash; May 2</span>
+          <span class="week-title">Production Launch + Training</span>
+          <span class="week-chevron">&#9662;</span>
+        </div>
+        <div class="week-body">
+          <div class="week-content">
+            <div class="task-group">
+              <div class="task-group-label">Julie &mdash; Team Training (30 min)</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Walk Edwin&rsquo;s full team through the production tool</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Cover SSO login, survey generation, conversational refinement, and export</div>
+            </div>
+            <div class="task-group">
+              <div class="task-group-label">Handoff Deliverables</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Production URL with SSO (or fallback auth + SSO timeline)</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>User accounts provisioned for the full team</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Technical Usage Guide (how to use it)</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Technical Maintenance Guide (how to update it)</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Change Impact Assessment (what updates would require)</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>&ldquo;What We Built&rdquo; summary (for Edwin&rsquo;s files)</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>&ldquo;Phase 3 Possibilities&rdquo; one-pager</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- W6 -->
+      <div class="week-block">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <span class="week-num">W6</span>
+          <span class="week-dates">May 5 &ndash; 9</span>
+          <span class="week-title">Week 1 Support + Sentiment Check</span>
+          <span class="week-chevron">&#9662;</span>
+        </div>
+        <div class="week-body">
+          <div class="week-content">
+            <div class="task-group">
+              <div class="task-group-label">Stakeholder Check-Ins</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Julie: Week 1 support check-in (15-min call or email)</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Jack: Casual &ldquo;how is the team liking it?&rdquo; check-in</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Address any reported issues immediately</div>
+            </div>
+            <div class="task-group">
+              <div class="task-group-label">Follow-Up</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>Review adoption progress and gather any additional feedback</div>
+              <div class="task-item"><div class="task-check" onclick="toggleCheck(this)"></div>If additional enhancements are of interest, begin exploring Phase 3 scope together</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SUPPORT PERIOD -->
+    <div class="support-block">
+      <h3>After Week 6: Support Period (May 9 &ndash; July 9)</h3>
+      <ul>
+        <li>60-day bug fix and optimization period per original agreement</li>
+        <li>Email support with 24-hour response time</li>
+        <li><strong>30-day adoption review (June 2&ndash;6)</strong> &mdash; a check-in to review how the tool is working for the team</li>
+        <li><strong>We will check in on how the tool is being used and identify any optimization opportunities</strong></li>
+
+      </ul>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-line"></div>
+    <div class="footer-brand">The Known Collective</div>
+  </div>
+
+</div>
+
+<script>
+  function toggleWeek(header) {
+    header.parentElement.classList.toggle('open');
+  }
+
+  function toggleCheck(el) {
+    el.classList.toggle('checked');
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Trigger progress bar animation
+        const progressFill = entry.target.querySelector('#progressFill');
+        if (progressFill) {
+          setTimeout(() => progressFill.classList.add('animate'), 300);
+        }
+      }
+    });
+  }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+
+  document.querySelectorAll('section:not(.hero)').forEach(s => observer.observe(s));
+
+  // Nav scroll effect
+  const nav = document.getElementById('nav');
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+  });
+</script>
+
+</body>
+</html>

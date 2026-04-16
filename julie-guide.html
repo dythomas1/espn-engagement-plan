@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESPN Survey Tool — Quick Start Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep-teal: #26434D;
+    --white: #FFFFFF;
+    --lilac: #DDD3F8;
+    --lilac-soft: rgba(221, 211, 248, 0.25);
+    --lilac-wash: rgba(221, 211, 248, 0.10);
+    --vermillion: #E03522;
+    --vermillion-soft: rgba(224, 53, 34, 0.08);
+    --dijon: #AA8A3B;
+    --black: #000000;
+    --border-light: #E0E0E0;
+    --border-soft: rgba(38, 67, 77, 0.08);
+    --text-primary: #26434D;
+    --text-secondary: rgba(38, 67, 77, 0.70);
+    --text-muted: rgba(38, 67, 77, 0.45);
+    --surface-warm: #FAFAF8;
+    --green: #2D7A4F;
+    --green-soft: rgba(45, 122, 79, 0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--text-primary);
+    font-family: 'DM Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 56px 48px 80px;
+  }
+
+  /* Subtle warm paper texture */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.018'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Decorative lilac top accent — the TKC signature */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--deep-teal) 0%, var(--lilac) 50%, var(--deep-teal) 100%);
+    z-index: 10000;
+  }
+
+  a {
+    color: var(--vermillion);
+    text-decoration: none;
+    transition: text-decoration-color 0.2s ease;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* --- HEADER --- */
+  .header {
+    margin-bottom: 56px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .header-overline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--vermillion);
+    margin-bottom: 14px;
+  }
+
+  .header h1 {
+    font-family: 'Frank Ruhl Libre', Georgia, 'Times New Roman', serif;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--deep-teal);
+    margin-bottom: 14px;
+  }
+
+  .header h1 em {
+    font-style: italic;
+    color: var(--deep-teal);
+  }
+
+  .header-desc {
+    font-size: 16px;
+    color: var(--text-secondary);
+    max-width: 640px;
+    line-height: 1.7;
+  }
+
+  /* --- STEPS --- */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    counter-reset: step;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 20px;
+    counter-increment: step;
+  }
+
+  .step-num {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: var(--lilac-soft);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Frank Ruhl Libre', Georgia, serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--deep-teal);
+    flex-shrink: 0;
+  }
+
+  .step-body h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--deep-teal);
+    margin-bottom: 6px;
+  }
+
+  .step-body p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .step-body .hint {
+    margin-top: 12px;
+    padding: 14px 18px;
+    background: var(--surface-warm);
+    border-left: 3px solid var(--lilac);
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  .step-body .hint strong {
+    color: var(--deep-teal);
+    font-weight: 600;
+  }
+
+  .step-body .example {
+    margin-top: 12px;
+    padding: 14px 18px;
+    background: var(--lilac-wash);
+    border-radius: 8px;
+    border: 1px solid rgba(221, 211, 248, 0.3);
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  .step-body .example::before {
+    content: 'Example';
+    font-style: normal;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* --- FEATURE GRID --- */
+  .features {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .features h2 {
+    font-family: 'Frank Ruhl Libre', Georgia, serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--deep-teal);
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .feature {
+    padding: 18px 22px;
+    background: var(--white);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(38, 67, 77, 0.06);
+  }
+
+  .feature-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--deep-teal);
+    margin-bottom: 4px;
+  }
+
+  .feature-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  /* --- DIVIDER --- */
+  .section-break {
+    margin: 60px 0 32px;
+    padding-top: 36px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .section-break h2 {
+    font-family: 'Frank Ruhl Libre', Georgia, serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--deep-teal);
+    margin-bottom: 8px;
+  }
+
+  .section-break p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    line-height: 1.7;
+  }
+
+  /* --- TRY IT LIST --- */
+  .try-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .try-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: start;
+    padding: 18px 22px;
+    background: var(--white);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(38, 67, 77, 0.06);
+  }
+
+  .try-item-body h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--deep-teal);
+    margin-bottom: 4px;
+  }
+
+  .try-item-body p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  .try-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .try-tag.core { background: var(--vermillion-soft); color: var(--vermillion); }
+  .try-tag.refine { background: var(--lilac-soft); color: var(--deep-teal); }
+  .try-tag.manage { background: var(--green-soft); color: var(--green); }
+
+  /* --- FOOTER --- */
+  .footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-light);
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+    letter-spacing: 0.01em;
+  }
+
+  /* --- PRINT --- */
+  @media print {
+    body { background: white; color: var(--deep-teal); padding: 24px; max-width: 100%; }
+    body::before, body::after { display: none; }
+    .step-num { background: #f0ecf8; }
+    .feature, .try-item { box-shadow: none; border-color: #ddd; }
+    .hint, .example { background: #f8f8f8; }
+    .try-tag { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 28px 20px; }
+    .header h1 { font-size: 32px; }
+    .step { grid-template-columns: 1fr; }
+    .step-num { width: 38px; height: 38px; font-size: 18px; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .try-item { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-overline">Getting Started</div>
+  <h1>ESPN Survey Tool</h1>
+  <p class="header-desc">Your AI-powered tool for generating research surveys, built on Burke methodology and ESPN's historical question catalog. Here's how to use it — and how to flag anything that doesn't work the way you'd expect.</p>
+</div>
+
+<div class="steps">
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Create Your Account</h3>
+      <p>Go to <strong><a href="https://espn-survey-app-dev.azurewebsites.net">espn-survey-app-dev.azurewebsites.net</a></strong> and click <strong>"Register"</strong>. Enter your name, email, and a password of your choice.</p>
+      <div class="hint">
+        <strong>Access Code:</strong> <span style="font-family: 'DM Sans', monospace; color: var(--vermillion); font-weight: 500; letter-spacing: 0.03em;">juliesCode2026</span><br>
+        You'll need this one-time code to create your account. It's single-use, so once you've registered you won't need it again.<br><br>
+        <strong>Important:</strong> Please use a personal email address for now — not your Walt Disney / ESPN corporate email. SSO integration with Disney's identity provider is still being implemented, and using a corporate email now may cause conflicts when SSO goes live.
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Start a New Conversation</h3>
+      <p>Click <strong>"Start New Conversation"</strong> to begin. Each conversation is a workspace for one survey project -- you can come back to it anytime from the sidebar.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Fill Out the Survey Generation Form</h3>
+      <p>You'll see a form with three fields. Fill in your research parameters and the AI will handle the rest.</p>
+      <div class="hint">
+        <strong>Project Objectives</strong> -- What are you trying to learn? Be specific about the research goals.<br>
+        <strong>Audience Specifications</strong> -- Who should be surveyed? Demographics, segments, behaviors.<br>
+        <strong>Number of Questions</strong> -- How many questions (1-30)? The AI will structure the survey accordingly.
+      </div>
+      <div class="example">"Understand ESPN+ subscriber satisfaction among 18-34 year-old cord-cutters who watch 3+ hours of sports per week. Focus on content variety, streaming quality, and likelihood to recommend."</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Watch It Generate in Real Time</h3>
+      <p>Hit <strong>"Generate Survey"</strong> and the AI streams the survey to your screen live. You'll see a progress indicator showing what the system is doing behind the scenes -- retrieving relevant methodology, analyzing your inputs, and building the survey.</p>
+      <div class="hint">
+        <strong>What's happening:</strong> The AI draws from Burke research methodology and ESPN's standard survey components (including the Fandom Scale) to build a properly structured research instrument tailored to your objectives.
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Review and Refine via Chat</h3>
+      <p>Once the survey is generated, a chat input appears below it. You can have a conversation with the AI to refine the survey -- add questions, remove sections, change wording, adjust the audience focus, or ask for explanations about why certain questions were included.</p>
+      <div class="example">"Can you add two questions about streaming device preferences? And make the brand awareness section more specific to ESPN+ vs. competitors."</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Export Your Survey</h3>
+      <p>When you're happy with the output, you have two options:</p>
+      <div class="hint">
+        <strong>Copy to Clipboard</strong> -- Click the <strong>"Copy"</strong> button to copy the full survey text. Paste into Qualtrics or any other platform.<br><br>
+        <strong>Export to Word</strong> -- Click <strong>"Export .docx"</strong> to download a professionally formatted Word document with ESPN branding, section headers, and programming labels ready for your team to review.
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">7</div>
+    <div class="step-body">
+      <h3>Edit Individual Questions</h3>
+      <p>Need to tweak just one or two words in a question? Click directly on any question in the generated survey to edit it in place -- no need to retype the whole thing or regenerate the entire survey. Your edits are saved automatically.</p>
+      <div class="hint">
+        <strong>Tip:</strong> Use inline editing for small wording changes. Use the chat for bigger structural changes like adding sections or reordering questions.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- YOUR ACTION ITEMS -->
+<div class="section-break">
+  <h2>Your Action Items — Addressed</h2>
+  <p>Since the April 7 demo, here's what we've shipped based on your feedback:</p>
+</div>
+
+<div class="try-list">
+  <div class="try-item">
+    <div class="try-item-body">
+      <h4>Inline question editing</h4>
+      <p>Click directly on any question to change a word or two in place — no retyping, no regenerating the whole survey. The Copilot frustration, solved.</p>
+    </div>
+    <span class="try-tag manage" style="background: var(--green-soft); color: var(--green);">Done</span>
+  </div>
+
+  <div class="try-item">
+    <div class="try-item-body">
+      <h4>Survey wording & formatting stay consistent when editing</h4>
+      <p>When you edit a single question inline, the rest of the survey's wording and formatting stays intact — your change is isolated to that question rather than rippling through or shifting the surrounding structure.</p>
+    </div>
+    <span class="try-tag manage" style="background: var(--green-soft); color: var(--green);">Done</span>
+  </div>
+</div>
+
+<!-- NOTED FOR NEXT PHASE -->
+<div class="section-break">
+  <h2>Noted for a Future Phase</h2>
+  <p>We heard these loud and clear. They're out of scope for the current phase but scoped for a later one — wanted you to know they're on the list:</p>
+</div>
+
+<div class="try-list">
+  <div class="try-item">
+    <div class="try-item-body">
+      <h4>Panel vs vendor survey mode</h4>
+      <p>A toggle (or similar) so surveys going to your internal ESPN panel skip the demographic/screener sections already captured on the backend, while vendor/external surveys keep the full set.</p>
+    </div>
+    <span class="try-tag refine" style="background: var(--lilac-soft); color: var(--deep-teal);">Next Phase</span>
+  </div>
+
+  <div class="try-item">
+    <div class="try-item-body">
+      <h4>Upload a reference survey</h4>
+      <p>Upload a past survey (e.g., a Word doc) and say "repeat this for [new topic]" so the tool can build directly off work your team has already done.</p>
+    </div>
+    <span class="try-tag refine" style="background: var(--lilac-soft); color: var(--deep-teal);">Next Phase</span>
+  </div>
+
+  <div class="try-item">
+    <div class="try-item-body">
+      <h4>Share a chat with your team</h4>
+      <p>Send a chat/survey conversation to a teammate, or add multiple people to one chat for collaborative survey building across the team.</p>
+    </div>
+    <span class="try-tag refine" style="background: var(--lilac-soft); color: var(--deep-teal);">Next Phase</span>
+  </div>
+</div>
+
+<!-- WHEN SOMETHING DOESN'T WORK -->
+<div class="section-break">
+  <h2>When Something Doesn't Work</h2>
+  <p>You're the primary user of this tool. If something breaks, behaves unexpectedly, or just doesn't meet your expectations, we want to hear it all — that's how we make the next version better.</p>
+</div>
+
+<div class="steps">
+  <div class="step">
+    <div class="step-num">A</div>
+    <div class="step-body">
+      <h3>Keep a running doc</h3>
+      <p>Create a Word doc and jot down issues as you hit them. No need to send each one separately — just send the doc to us right before or during our next checkpoint.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">B</div>
+    <div class="step-body">
+      <h3>For each issue, note three things</h3>
+      <div class="hint">
+        <strong>What you were doing</strong> — the objectives, audience, length, or chat prompt you were working with.<br>
+        <strong>What you expected</strong> — what the tool should have done.<br>
+        <strong>What actually happened</strong> — the output, error, or missing behavior. A screenshot is helpful but not required.
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">C</div>
+    <div class="step-body">
+      <h3>We'll regroup in about a week and a half</h3>
+      <p>Use the tool for real work in the meantime — the more you actually lean on it, the better the feedback. We'll walk through your notes together, prioritize, and keep iterating.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <span>ESPN Survey Tool — Quick Start Guide</span>
+  <span>The Known Collective</span>
+</div>
+
+</body>
+</html>
